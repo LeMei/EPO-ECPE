@@ -1,8 +1,5 @@
 # -*- encoding:utf-8 -*-
 '''
-@time: 2020/12/21 9:48 下午
-@author: huguimin
-@email: 718400742@qq.com
 '''
 import os
 import random
@@ -83,51 +80,51 @@ class Model:
         continue_not_increase = 0
 
         ###pre-training
-        for epoch in range(self.opt.pre_num_epoch):
-             print('pre_training' + '>' * 100)
-             print('epoch: ', epoch)
-
-             for train in get_train_batch_data(self.train, self.opt.batch_size, self.opt.keep_prob1,
-                                               self.opt.keep_prob2):
-                 global_step += 1
-                 self.sub_model.train()
-                 #pre_optimizer.zero_grad()
-
-                 inputs = [train[col].to(self.opt.device) for col in self.opt.inputs_cols]
-                 topk_index, emo_pred, pair_pred, pair_index, pair_no_emo_pred, \
-                 pair_no_emotion_oriented_index, emo_cau_pos = self.sub_model(inputs)
-
-                 doc_len_batch = emo_pred.size(1)
-                 y_mask = train['y_mask'][:, :doc_len_batch]
-                 emo_targets = train['y_emotion'].to(self.opt.device)[:, :doc_len_batch]
-
-                 emo_targets = torch.argmax(emo_targets, dim=2).float()
-
-
-                 ##在情感上设置下mask
-                 y_mask = y_mask.bool().to(self.opt.device)
-                 emo_pred = emo_pred.masked_select(y_mask)
-                 emo_targets = emo_targets.masked_select(y_mask)
-
-                 ###通过pos_weight来调整下准确率和召回率
-                 pos_weight = torch.where(emo_targets==1, 1.5, 1.0)
-                 criterion = nn.BCEWithLogitsLoss(reduction='mean',pos_weight=pos_weight)
-
-                 emotion_loss = criterion(emo_pred, emo_targets)
-                 doc_couple = train['doc_couple']
-                 couples_true, couples_mask = \
-                     self.sub_model.output_util(emo_cau_pos, doc_couple, y_mask)
-                 loss_no_emo_pair, no_emo_labels = self.sub_model.loss_pair(pair_no_emo_pred, couples_true,
-                                                                            pair_no_emotion_oriented_index,
-                                                                            couples_mask)
-                 loss1 = emotion_loss + loss_no_emo_pair
-                 # loss1 = loss_no_emo_pair
-
-
-                 if global_step % 2 == 0:
-
-                    loss1.backward()
-                    pre_optimizer.step()
+        # for epoch in range(self.opt.pre_num_epoch):
+        #      print('pre_training' + '>' * 100)
+        #      print('epoch: ', epoch)
+        #
+        #      for train in get_train_batch_data(self.train, self.opt.batch_size, self.opt.keep_prob1,
+        #                                        self.opt.keep_prob2):
+        #          global_step += 1
+        #          self.sub_model.train()
+        #          #pre_optimizer.zero_grad()
+        #
+        #          inputs = [train[col].to(self.opt.device) for col in self.opt.inputs_cols]
+        #          topk_index, emo_pred, pair_pred, pair_index, pair_no_emo_pred, \
+        #          pair_no_emotion_oriented_index, emo_cau_pos = self.sub_model(inputs)
+        #
+        #          doc_len_batch = emo_pred.size(1)
+        #          y_mask = train['y_mask'][:, :doc_len_batch]
+        #          emo_targets = train['y_emotion'].to(self.opt.device)[:, :doc_len_batch]
+        #
+        #          emo_targets = torch.argmax(emo_targets, dim=2).float()
+        #
+        #
+        #          ##在情感上设置下mask
+        #          y_mask = y_mask.bool().to(self.opt.device)
+        #          emo_pred = emo_pred.masked_select(y_mask)
+        #          emo_targets = emo_targets.masked_select(y_mask)
+        #
+        #          ###通过pos_weight来调整下准确率和召回率
+        #          pos_weight = torch.where(emo_targets==1, 1.5, 1.0)
+        #          criterion = nn.BCEWithLogitsLoss(reduction='mean',pos_weight=pos_weight)
+        #
+        #          emotion_loss = criterion(emo_pred, emo_targets)
+        #          doc_couple = train['doc_couple']
+        #          couples_true, couples_mask = \
+        #              self.sub_model.output_util(emo_cau_pos, doc_couple, y_mask)
+        #          loss_no_emo_pair, no_emo_labels = self.sub_model.loss_pair(pair_no_emo_pred, couples_true,
+        #                                                                     pair_no_emotion_oriented_index,
+        #                                                                     couples_mask)
+        #          loss1 = emotion_loss + loss_no_emo_pair
+        #          # loss1 = loss_no_emo_pair
+        #
+        #
+        #          if global_step % 2 == 0:
+        #
+        #             loss1.backward()
+        #             pre_optimizer.step()
 
 
         for epoch in range(self.opt.num_epoch):

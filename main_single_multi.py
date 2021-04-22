@@ -1,9 +1,4 @@
 # -*- encoding:utf-8 -*-
-'''
-@time: 2019/12/21 9:48 下午
-@author: huguimin
-@email: 718400742@qq.com
-'''
 import os
 import random
 import math
@@ -17,7 +12,7 @@ from sklearn import metrics
 import torch.nn as nn
 import time
 # from src.model import Networks
-from src.model_recon_14 import Networks
+from src.model import Networks
 
 ###尝试采用梯度裁剪and将预训练部分和正式训练部分分别用两个优化器来做
 

@@ -1,9 +1,4 @@
 # -*- encoding:utf-8 -*-
-'''
-@time: 2019/12/21 8:58 下午
-@author: huguimin
-@email: 718400742@qq.com
-'''
 import torch
 import torch.nn as nn
 import numpy as np

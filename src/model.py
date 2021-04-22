@@ -2,11 +2,6 @@ import torch
 import numpy as np
 
 # -*- encoding:utf-8 -*-
-'''
-@time: 2020/1/12 1:36 下午
-@author: huguimin
-@email: 718400742@qq.com
-'''
 import copy
 import math
 
