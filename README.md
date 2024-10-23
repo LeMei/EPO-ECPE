@@ -11,3 +11,17 @@ Emotion-cause pair extraction (ECPE) task aims to extract all the pairs of emoti
 arxiv: https://arxiv.org/pdf/2302.12417.pdf
 
 taslp: https://ieeexplore.ieee.org/document/10067863
+
+Data: https://drive.google.com/drive/folders/16Ji5jVECh3gWnyacQWKgnpGHD4yJGV5C
+
+Please cite our work if possible. Thanks in advance!
+
+@article{hu2023emotion,
+  title={Emotion prediction oriented method with multiple supervisions for emotion-cause pair extraction},
+  author={Hu, Guimin and Zhao, Yi and Lu, Guangming},
+  journal={IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  volume={31},
+  pages={1141--1152},
+  year={2023},
+  publisher={IEEE}
+}
